@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>American Dream — Sales Deck</title>
+<meta name="description" content="The world's most valuable commercial stage. North America's largest destination."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* =====================================================
+   TOKENS
+   ===================================================== */
+:root{
+  --gold:#C8922A;
+  --gold2:#E4AE4C;
+  --gold3:#8B6318;
+  --gold-pale:#F5E6C8;
+  --ink:#07070A;
+  --ink2:#0F0F14;
+  --ink3:#181820;
+  --ink4:#22222C;
+  --border:rgba(200,146,42,.18);
+  --border2:rgba(200,146,42,.35);
+  --cream:#EDE8DF;
+  --cream2:#A09890;
+  --cream3:#5A5450;
+  --white:#FDFCFA;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease2:cubic-bezier(.4,0,.2,1);
+}
+
+/* =====================================================
+   RESET
+   ===================================================== */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);color:var(--cream);font-family:'Barlow',sans-serif}
+::selection{background:rgba(200,146,42,.25);color:var(--white)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--gold)}
+a{text-decoration:none;color:inherit}
+button{border:none;background:none;cursor:pointer;font-family:inherit}
+img,video{display:block}
+
+/* =====================================================
+   CURSOR
+   ===================================================== */
+#csr{position:fixed;width:9px;height:9px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s;mix-blend-mode:difference}
+#csr-r{position:fixed;width:38px;height:38px;border:1px solid rgba(200,146,42,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .45s var(--ease),height .45s var(--ease)}
+body.hovering #csr{width:18px;height:18px}
+body.hovering #csr-r{width:58px;height:58px;border-color:var(--gold)}
+cursor:none,body{cursor:none}
+
+/* =====================================================
+   LOADER
+   ===================================================== */
+#loader{
+  position:fixed;inset:0;z-index:9000;background:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .9s var(--ease),transform 1s var(--ease);
+}
+#loader.out{opacity:0;transform:scale(1.04);pointer-events:none}
+.ld-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;letter-spacing:.55em;text-transform:uppercase;color:var(--gold);margin-bottom:48px;opacity:0;animation:fadeUp .8s var(--ease) .3s forwards}
+.ld-bar{width:220px;height:1px;background:rgba(200,146,42,.2)}
+.ld-fill{height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold),var(--gold2));width:0%;transition:width .07s linear}
+.ld-pct{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--cream3);margin-top:14px;opacity:0;animation:fadeUp .6s var(--ease) .5s forwards}
+
+/* =====================================================
+   DECK SHELL
+   ===================================================== */
+#deck{
+  position:fixed;inset:0;overflow:hidden;
+  opacity:0;transition:opacity .6s;
+}
+#deck.ready{opacity:1}
+
+/* =====================================================
+   SLIDES CONTAINER
+   ===================================================== */
+#slides{
+  position:absolute;inset:0;
+  transition:transform .85s var(--ease);
+}
+
+/* =====================================================
+   SLIDE BASE
+   ===================================================== */
+.slide{
+  position:absolute;width:100%;height:100%;
+  overflow:hidden;
+  opacity:0;
+  transition:opacity .0s;
+  pointer-events:none;
+}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* Media layer */
+.s-media{position:absolute;inset:0;z-index:0}
+.s-media video,.s-media img{width:100%;height:100%;object-fit:cover}
+.s-media iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:177.78vh;height:56.25vw;min-width:100%;min-height:100%;pointer-events:none;border:none}
+
+/* Gradient overlays */
+.ov-dark{position:absolute;inset:0;z-index:1;background:rgba(7,7,10,.52)}
+.ov-bottom{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(7,7,10,.95) 0%,rgba(7,7,10,.4) 40%,transparent 100%)}
+.ov-left{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(7,7,10,.92) 0%,rgba(7,7,10,.5) 45%,transparent 100%)}
+.ov-center{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at center,transparent 30%,rgba(7,7,10,.85) 100%)}
+.ov-full{position:absolute;inset:0;z-index:1;background:rgba(7,7,10,.75)}
+
+/* Content layer */
+.s-content{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column}
+
+/* =====================================================
+   SLIDE ANIMATIONS
+   ===================================================== */
+.sa{opacity:0;transform:translateY(30px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.sa.in{opacity:1;transform:none}
+.sa[data-d="1"]{transition-delay:.15s}
+.sa[data-d="2"]{transition-delay:.3s}
+.sa[data-d="3"]{transition-delay:.45s}
+.sa[data-d="4"]{transition-delay:.6s}
+.sa[data-d="5"]{transition-delay:.75s}
+.sa-left{opacity:0;transform:translateX(-40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.sa-left.in{opacity:1;transform:none}
+.sa-right{opacity:0;transform:translateX(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.sa-right.in{opacity:1;transform:none}
+.sa-scale{opacity:0;transform:scale(.94);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.sa-scale.in{opacity:1;transform:scale(1)}
+
+/* =====================================================
+   TYPOGRAPHY
+   ===================================================== */
+.t-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px}
+.t-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
+.t-h1{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:.9;letter-spacing:-.02em}
+.t-h2{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:.92;letter-spacing:-.015em}
+.t-italic{font-style:italic;color:var(--gold)}
+.t-outline{-webkit-text-stroke:1px rgba(237,232,223,.22);color:transparent}
+.t-body{font-size:14px;font-weight:300;color:var(--cream2);line-height:1.85}
+.t-label{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--cream3)}
+.t-stat-n{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1;color:var(--gold)}
+.gold-line{width:48px;height:1px;background:linear-gradient(90deg,var(--gold3),var(--gold))}
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+.btn-gold{display:inline-flex;align-items:center;gap:10px;padding:13px 36px;background:linear-gradient(135deg,var(--gold3),var(--gold));color:var(--ink);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;transition:all .3s;position:relative;overflow:hidden}
+.btn-gold::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold),var(--gold2));opacity:0;transition:opacity .3s}
+.btn-gold:hover::after{opacity:1}
+.btn-gold span{position:relative;z-index:1}
+.btn-outline{display:inline-flex;align-items:center;gap:10px;padding:12px 32px;border:1px solid rgba(200,146,42,.45);color:var(--cream);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;transition:all .3s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn-icon{width:42px;height:42px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.btn-icon:hover{background:rgba(200,146,42,.12);border-color:var(--gold)}
+
+/* =====================================================
+   NAV BAR (top)
+   ===================================================== */
+#topbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:22px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(7,7,10,.8),transparent);
+  transition:background .4s;
+  pointer-events:none;
+}
+#topbar.solid{background:rgba(7,7,10,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.top-logo{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);pointer-events:auto}
+.top-logo small{display:block;font-family:'Barlow Condensed',sans-serif;font-size:8px;letter-spacing:.5em;text-transform:uppercase;color:var(--cream3);margin-top:2px;font-weight:400}
+.top-right{display:flex;align-items:center;gap:20px;pointer-events:auto}
+#menu-btn{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--cream2);
+  pointer-events:auto;transition:color .2s;
+}
+#menu-btn:hover{color:var(--gold)}
+.hamburger{display:flex;flex-direction:column;gap:4px;width:22px}
+.hamburger span{height:1px;background:currentColor;transition:transform .3s,opacity .3s}
+
+/* =====================================================
+   SLIDE DRAWER (nav panel)
+   ===================================================== */
+#drawer{
+  position:fixed;top:0;right:0;bottom:0;z-index:600;
+  width:340px;background:var(--ink2);border-left:1px solid var(--border);
+  transform:translateX(100%);transition:transform .5s var(--ease);
+  overflow-y:auto;padding:80px 0 40px;
+}
+#drawer.open{transform:translateX(0)}
+#drawer::-webkit-scrollbar{width:3px}
+#drawer::-webkit-scrollbar-thumb{background:var(--border2)}
+.drawer-close{position:absolute;top:24px;right:24px;color:var(--cream3);font-size:20px;transition:color .2s}
+.drawer-close:hover{color:var(--gold)}
+.drawer-section-label{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:600;letter-spacing:.5em;text-transform:uppercase;color:var(--cream3);padding:16px 32px 8px}
+.drawer-item{
+  display:flex;align-items:center;gap:14px;padding:12px 32px;
+  transition:background .2s;cursor:pointer;
+  font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--cream2);
+}
+.drawer-item:hover{background:rgba(200,146,42,.07);color:var(--cream)}
+.drawer-item.current{background:rgba(200,146,42,.1);color:var(--gold)}
+.drawer-item .di-num{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:300;color:var(--gold);min-width:28px;line-height:1}
+.drawer-item .di-thumb{width:64px;height:40px;background:var(--ink3);overflow:hidden;flex-shrink:0}
+.drawer-item .di-thumb img{width:100%;height:100%;object-fit:cover;opacity:.6;transition:opacity .2s}
+.drawer-item:hover .di-thumb img,.drawer-item.current .di-thumb img{opacity:1}
+.drawer-divider{height:1px;background:var(--border);margin:12px 32px}
+
+/* =====================================================
+   NAV ARROWS (sides)
+   ===================================================== */
+.nav-arrow{
+  position:fixed;top:50%;transform:translateY(-50%);z-index:400;
+  width:52px;height:52px;border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(7,7,10,.5);backdrop-filter:blur(8px);
+  transition:all .3s;color:var(--cream2);
+}
+.nav-arrow:hover{background:rgba(200,146,42,.15);border-color:var(--gold);color:var(--gold)}
+.nav-arrow.disabled{opacity:.2;pointer-events:none}
+#arr-prev{left:16px}
+#arr-next{right:16px}
+.arr-svg{width:16px;height:16px}
+
+/* =====================================================
+   SLIDE COUNTER
+   ===================================================== */
+#slide-counter{
+  position:fixed;bottom:28px;right:48px;z-index:400;
+  font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.2em;color:var(--cream3);
+  display:flex;align-items:center;gap:10px;
+}
+.sc-dots{display:flex;gap:6px}
+.sc-dot{width:5px;height:5px;border-radius:50%;background:var(--cream3);transition:all .3s}
+.sc-dot.on{background:var(--gold);transform:scale(1.3)}
+
+/* =====================================================
+   PROGRESS BAR
+   ===================================================== */
+#prog{position:fixed;top:0;left:0;height:2px;z-index:700;background:linear-gradient(90deg,var(--gold3),var(--gold),var(--gold2));transition:width .5s var(--ease)}
+
+/* =====================================================
+   FULLSCREEN OVERLAY (for CTAs)
+   ===================================================== */
+#overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(7,7,10,.92);backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .4s;
+  padding:20px;
+}
+#overlay.open{opacity:1;pointer-events:auto}
+.ov-box{background:var(--ink3);border:1px solid var(--border2);max-width:560px;width:100%;max-height:90vh;overflow-y:auto;padding:52px}
+.ov-box::-webkit-scrollbar{width:3px}
+.ov-close{position:absolute;top:20px;right:20px;color:var(--cream3);font-size:18px;transition:color .2s}
+.ov-close:hover{color:var(--gold)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--cream3);margin-bottom:7px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--ink4);border:1px solid var(--border);color:var(--cream);font-family:'Barlow',sans-serif;font-size:13px;padding:11px 14px;outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg select option{background:var(--ink3)}
+
+/* =====================================================
+   VIDEO LIGHTBOX
+   ===================================================== */
+#vbox{
+  position:fixed;inset:0;z-index:3000;
+  background:rgba(0,0,0,.95);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .4s;
+}
+#vbox.open{opacity:1;pointer-events:auto}
+.vb-inner{width:88vw;max-width:1100px;aspect-ratio:16/9;position:relative}
+.vb-inner iframe{width:100%;height:100%;border:none}
+.vb-close{position:absolute;top:-44px;right:0;color:rgba(255,255,255,.7);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;transition:color .2s;display:flex;align-items:center;gap:8px}
+.vb-close:hover{color:#fff}
+
+/* =====================================================
+   MARQUEE
+   ===================================================== */
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.marquee-track{display:inline-flex;animation:marquee 32s linear infinite;white-space:nowrap}
+.marquee-track:hover{animation-play-state:paused}
+.mi{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;padding:0 44px;line-height:1}
+.mi-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:currentColor;margin:0 -12px;vertical-align:middle;opacity:.5}
+
+/* =====================================================
+   STAT CARD
+   ===================================================== */
+.stat-card{padding:28px 24px;border:1px solid var(--border);transition:border-color .3s,background .3s}
+.stat-card:hover{border-color:var(--border2);background:rgba(200,146,42,.04)}
+
+/* =====================================================
+   DATA BAR
+   ===================================================== */
+.data-bar{height:2px;background:rgba(200,146,42,.15);border-radius:2px;overflow:hidden;margin-top:10px}
+.data-fill{height:100%;background:linear-gradient(90deg,var(--gold3),var(--gold));border-radius:2px;width:0%;transition:width 1.4s var(--ease)}
+
+/* =====================================================
+   TIER CARD
+   ===================================================== */
+.tier{padding:40px 32px;background:var(--ink3);border:1px solid var(--border);position:relative;transition:all .3s}
+.tier:hover{border-color:var(--border2);transform:translateY(-4px)}
+.tier.feat{border-color:rgba(200,146,42,.35)}
+.tier.feat::before{content:'RECOMMENDED';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:700;letter-spacing:.3em;padding:4px 18px}
+
+/* =====================================================
+   KEYFRAMES
+   ===================================================== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes tickDown{0%{top:-100%;opacity:0}20%{opacity:1}80%{opacity:1}100%{top:100%;opacity:0}}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* =====================================================
+   SCROLL INDICATOR
+   ===================================================== */
+.scroll-ind{display:flex;flex-direction:column;align-items:center;gap:8px}
+.si-line{width:1px;height:56px;background:rgba(200,146,42,.15);position:relative;overflow:hidden}
+.si-line::after{content:'';position:absolute;width:100%;height:55%;top:-100%;background:linear-gradient(to bottom,transparent,var(--gold));animation:tickDown 2.6s ease-in-out infinite}
+.si-label{font-family:'Barlow Condensed',sans-serif;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--cream3);writing-mode:vertical-lr}
+
+/* =====================================================
+   GRAIN
+   ===================================================== */
+.grain::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:3;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  opacity:.45;
+}
+
+/* =====================================================
+   UTILITY
+   ===================================================== */
+.abs{position:absolute}
+.rel{position:relative}
+.z2{z-index:2}
+.z3{z-index:3}
+.flex{display:flex}
+.col{flex-direction:column}
+.items-center{align-items:center}
+.items-end{align-items:flex-end}
+.justify-between{justify-content:space-between}
+.justify-center{justify-content:center}
+.gap-8{gap:8px}
+.gap-12{gap:12px}
+.gap-16{gap:16px}
+.gap-20{gap:20px}
+.gap-24{gap:24px}
+.gap-32{gap:32px}
+.gap-48{gap:48px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr)}
+.p-full{padding:80px}
+.p-left{padding:80px 0 80px 80px}
+.w-full{width:100%}
+.h-full{height:100%}
+.text-center{text-align:center}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media(max-width:900px){
+  .p-full{padding:48px 24px}
+  .p-left{padding:48px 24px}
+  .grid2,.grid3,.grid4{grid-template-columns:1fr}
+  #arr-prev{left:8px}#arr-next{right:8px}
+  .t-h1{font-size:clamp(44px,12vw,88px)!important}
+  .hide-mob{display:none!important}
+  #topbar{padding:16px 24px}
+  #slide-counter{right:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="csr"></div>
+<div id="csr-r"></div>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="ld-name">American Dream</div>
+  <div class="ld-bar"><div class="ld-fill" id="ld-fill"></div></div>
+  <div class="ld-pct" id="ld-pct">0%</div>
+</div>
+
+<!-- Progress -->
+<div id="prog" style="width:0%"></div>
+
+<!-- Top Bar -->
+<div id="topbar">
+  <div class="top-logo">
+    American Dream
+    <small>East Rutherford · New Jersey</small>
+  </div>
+  <div class="top-right">
+    <button onclick="openOverlay('contact')" class="btn-gold hide-mob" style="padding:10px 24px;font-size:9px"><span>Get in Touch</span></button>
+    <button id="menu-btn" onclick="toggleDrawer()">
+      <div class="hamburger"><span></span><span></span><span></span></div>
+      <span style="font-family:'Barlow Condensed';font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream2);font-weight:600">Menu</span>
+    </button>
+  </div>
+</div>
+
+<!-- Drawer Navigation -->
+<div id="drawer">
+  <button class="drawer-close" onclick="toggleDrawer()">✕</button>
+  <div id="drawer-nav"></div>
+</div>
+
+<!-- Deck -->
+<div id="deck">
+  <div id="slides">
+    <!-- slides injected by JS -->
+  </div>
+</div>
+
+<!-- Nav Arrows -->
+<button class="nav-arrow" id="arr-prev" onclick="goSlide(cur-1)" title="Previous">
+  <svg class="arr-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+</button>
+<button class="nav-arrow" id="arr-next" onclick="goSlide(cur+1)" title="Next">
+  <svg class="arr-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+</button>
+
+<!-- Slide Counter + Dots -->
+<div id="slide-counter">
+  <span id="sc-cur">01</span>
+  <div class="sc-dots" id="sc-dots"></div>
+  <span id="sc-tot">01</span>
+</div>
+
+<!-- CTA Overlay -->
+<div id="overlay" onclick="closeOverlay(event)">
+  <div class="ov-box rel" id="ov-inner">
+    <button class="ov-close abs" style="top:20px;right:20px" onclick="closeOverlay(null,true)">✕</button>
+    <!-- content injected -->
+  </div>
+</div>
+
+<!-- Video Lightbox -->
+<div id="vbox" onclick="closeVideo(event)">
+  <div class="vb-inner">
+    <button class="vb-close" onclick="closeVideo(null,true)">
+      <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      Close
+    </button>
+    <iframe id="vb-iframe" src="" allow="autoplay;fullscreen" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   SLIDES DATA
+   ============================================================ */
+const SLIDES = [
+
+/* 0 — INTRO / CINEMATIC HERO */
+{
+  id:'hero',section:'Intro',label:'Welcome',
+  thumb:'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=200&q=60',
+  render:()=>`
+    <div class="s-media grain">
+      <video autoplay muted loop playsinline preload="auto" poster="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1920&q=80">
+        <source src="https://videos.pexels.com/video-files/3571264/3571264-hd_1920_1080_30fps.mp4" type="video/mp4"/>
+        <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1920&q=80"/>
+      </video>
+      <div class="ov-left"></div>
+      <div class="ov-bottom"></div>
+    </div>
+    <div class="s-content" style="padding:0 80px 80px;justify-content:flex-end">
+      <p class="t-eyebrow sa" data-d="0" style="margin-bottom:28px">North America's Largest Destination</p>
+      <h1 class="t-h1 sa" data-d="1" style="font-size:clamp(60px,8.5vw,122px);max-width:820px;margin-bottom:28px">
+        The World's<br/><em class="t-italic">Most Valuable</em><br/><span class="t-outline">Commercial Stage</span>
+      </h1>
+      <p class="t-body sa" data-d="2" style="max-width:440px;margin-bottom:40px">
+        3 million sq ft. 40 million visitors. 16 minutes from Manhattan.<br/>The stage is set. Your brand belongs here.
+      </p>
+      <div class="flex gap-16 sa" data-d="3">
+        <button class="btn-gold" onclick="goSlide(1)"><span>Explore the Property →</span></button>
+        <button class="btn-outline" onclick="openOverlay('contact')">Schedule a Briefing</button>
+      </div>
+    </div>
+    <!-- Stats overlay bottom-right -->
+    <div class="abs sa-right" style="right:80px;bottom:80px;display:flex;gap:40px;z-index:3" data-delay=".6s">
+      ${[['40M+','Visitors/Year'],['$5B+','Investment'],['55M','Catchment'],['16min','From NYC']].map(([n,l])=>`
+        <div class="text-center">
+          <div class="t-stat-n" style="font-size:32px">${n}</div>
+          <div class="t-label" style="margin-top:4px">${l}</div>
+        </div>`).join('')}
+    </div>
+    <!-- Scroll hint -->
+    <div class="abs scroll-ind" style="left:80px;bottom:80px;z-index:3">
+      <div class="si-line"></div>
+      <div class="si-label">Next</div>
+    </div>`
+},
+
+/* 1 — THE PROPERTY */
+{
+  id:'property',section:'The Property',label:'Why American Dream',
+  thumb:'https://images.unsplash.com/photo-1567449303183-ae0d6ed1498e?w=200&q=60',
+  render:()=>`
+    <div class="s-media">
+      <img src="https://images.unsplash.com/photo-1567449303183-ae0d6ed1498e?w=1920&q=80" alt="Mall interior"/>
+      <div class="ov-left"></div>
+    </div>
+    <div class="s-content p-full" style="justify-content:center;max-width:680px">
+      <p class="t-eyebrow sa" data-d="0" style="margin-bottom:24px">The Property</p>
+      <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(42px,5.5vw,80px);margin-bottom:20px">
+        Not a Mall.<br/><em class="t-italic">A Nation.</em>
+      </h2>
+      <div class="gold-line sa" data-d="2" style="margin-bottom:28px"></div>
+      <p class="t-body sa" data-d="2" style="margin-bottom:48px">
+        American Dream is the most ambitious mixed-use commercial destination ever built in North America. 
+        In one property: world-class retail, dining, entertainment, sports, and live events — operating 365 days a year at a scale no standalone brand could generate alone.
+      </p>
+      <div class="grid2 sa" data-d="3" style="gap:16px;max-width:560px">
+        ${[
+          ['#1','Largest in North America'],
+          ['55M','Population in 2-hr radius'],
+          ['4.8H','Average dwell time'],
+          ['$138K','Avg household income'],
+        ].map(([n,l])=>`
+          <div class="stat-card">
+            <div class="t-stat-n" style="font-size:38px">${n}</div>
+            <div class="t-label" style="margin-top:6px">${l}</div>
+          </div>`).join('')}
+      </div>
+    </div>`
+},
+
+/* 2 — LOCATION */
+{
+  id:'location',section:'The Property',label:'Location & Access',
+  thumb:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=200&q=60',
+  render:()=>`
+    <div class="s-media">
+      <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1920&q=80" alt="NYC Skyline"/>
+      <div class="ov-full" style="background:rgba(7,7,10,.65)"></div>
+    </div>
+    <div class="s-content" style="justify-content:center;align-items:center;text-align:center;padding:80px">
+      <p class="t-eyebrow sa" data-d="0" style="margin-bottom:24px;justify-content:center">Location & Access</p>
+      <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(40px,5vw,76px);margin-bottom:16px">
+        At the Center of<br/><em class="t-italic">Everything That Matters.</em>
+      </h2>
+      <p class="t-body sa" data-d="2" style="max-width:520px;margin:0 auto 52px">
+        16 minutes from Midtown Manhattan. Adjacent to MetLife Stadium. Direct NJ Transit access. Three international airports within 30 minutes.
+      </p>
+      <div class="flex sa" data-d="3" style="gap:0;border:1px solid var(--border);max-width:860px;margin:0 auto">
+        ${[
+          ['16 min','Midtown Manhattan','PATH Train'],
+          ['30 min','JFK International','Via I-95'],
+          ['12 min','EWR Airport','Via NJ Tpke'],
+          ['55M','Consumers','2-hr catchment'],
+        ].map(([n,t,s])=>`
+          <div style="flex:1;padding:32px 24px;border-right:1px solid var(--border);text-align:center;last-child:border-none">
+            <div class="t-stat-n" style="font-size:36px">${n}</div>
+            <div style="font-size:13px;font-weight:500;margin-top:8px">${t}</div>
+            <div class="t-label" style="margin-top:4px">${s}</div>
+          </div>`).join('')}
+      </div>
+    </div>`
+},
+
+/* 3 — RETAIL */
+{
+  id:'retail',section:'Retail',label:'Retail Overview',
+  thumb:'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=200&q=60',
+  render:()=>`
+    <div class="s-media">
+      <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1920&q=80" alt="Retail"/>
+      <div class="ov-left"></div>
+    </div>
+    <div class="s-content p-full" style="justify-content:center;max-width:620px">
+      <p class="t-eyebrow sa" data-d="0" style="margin-bottom:24px">Retail</p>
+      <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(38px,5vw,72px);margin-bottom:20px">
+        500+ Brands.<br/><em class="t-italic">One Address.</em>
+      </h2>
+      <div class="gold-line sa" data-d="1" style="margin-bottom:24px"></div>
+      <p class="t-body sa" data-d="2" style="margin-bottom:36px">
+        From global flagship anchors to emerging direct-to-consumer brands — every retail category at scale. 
+        With an average dwell time of 4.8 hours and sales productivity exceeding $2,300 per square foot, no other property in North America delivers comparable commercial performance.
+      </p>
+      <div style="margin-bottom:36px" class="sa" data-d="3">
+        ${[['$2,300+','Sales per square foot',92],['4.8H','Average dwell time',88],['500+','Brands & stores',96],['300%','Above mall avg PSF',78]].map(([v,l,w])=>`
+          <div style="margin-bottom:16px">
+            <div class="flex justify-between" style="margin-bottom:6px">
+              <span style="font-size:13px;font-weight:500">${l}</span>
+              <span class="t-stat-n" style="font-size:16px">${v}</span>
+            </div>
+            <div class="data-bar"><div class="data-fill" data-w="${w}"></div></div>
+          </div>`).join('')}
+      </div>
+      <div class="flex gap-12 sa" data-d="4">
+        <button class="btn-gold" onclick="openOverlay('lease')"><span>Leasing Inquiry</span></button>
+        <button class="btn-outline" onclick="goSlide(4)">View Luxury Wing →</button>
+      </div>
+    </div>`
+},
+
+/* 4 — LUXURY */
+{
+  id:'luxury',section:'Retail',label:'Luxury Wing',
+  thumb:'https://i.pinimg.com/736x/fe/59/dd/fe59dda101a080b1e30c22f038c9c58e.jpg',
+  render:()=>`
+    <div style="display:grid;grid-template-columns:1fr 1fr;height:100%">
+      <!-- Left: luxury image -->
+      <div class="rel overflow-hidden">
+        <img src="https://i.pinimg.com/736x/fe/59/dd/fe59dda101a080b1e30c22f038c9c58e.jpg" style="width:100%;height:100%;object-fit:cover;filter:brightness(.7)"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent,rgba(7,7,10,.6))"></div>
+        <div class="abs sa-left" style="bottom:52px;left:44px;z-index:2">
+          <div class="t-stat-n" style="font-size:52px">$18.4B</div>
+          <div class="t-label" style="margin-top:6px">Annual luxury spend potential<br/>in the tri-state catchment</div>
+        </div>
+      </div>
+      <!-- Right: content -->
+      <div style="background:var(--ink2);padding:72px 56px;display:flex;flex-direction:column;justify-content:center;overflow-y:auto">
+        <p class="t-eyebrow sa" data-d="0" style="margin-bottom:22px">Luxury Wing</p>
+        <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(32px,3.5vw,56px);margin-bottom:16px">
+          The Standard<br/><em class="t-italic">Others Aspire To.</em>
+        </h2>
+        <div class="gold-line sa" data-d="1" style="margin-bottom:22px"></div>
+        <p class="t-body sa" data-d="2" style="margin-bottom:32px">
+          A dedicated luxury corridor with its own architectural identity, white-glove service standards, and curated adjacencies. 42% of our visitors earn $150K+ household income. 38% are international guests — arriving already intending to spend.
+        </p>
+        <div style="margin-bottom:32px" class="sa" data-d="3">
+          <div class="t-label" style="margin-bottom:12px">Target Brand Adjacencies</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            ${['Louis Vuitton','Hermès','Chanel','Gucci','Dior','Prada','Bottega Veneta','Burberry','Saint Laurent','Cartier','Tiffany & Co','Balenciaga'].map(b=>`
+              <div style="padding:6px 14px;border:1px solid var(--border);font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.1em;color:var(--cream2);transition:all .2s" onmouseenter="this.style.borderColor='var(--gold2)';this.style.color='var(--gold-pale)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--cream2)'">${b}</div>`).join('')}
+          </div>
+        </div>
+        <div class="flex gap-12 sa" data-d="4">
+          <button class="btn-gold" onclick="openOverlay('lease')"><span>Luxury Leasing →</span></button>
+        </div>
+      </div>
+    </div>`
+},
+
+/* 5 — DINING */
+{
+  id:'dining',section:'Dining',label:'Dining & Lifestyle',
+  thumb:'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=200&q=60',
+  render:()=>`
+    <div class="s-media grain">
+      <video autoplay muted loop playsinline preload="none" poster="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80">
+        <source src="https://videos.pexels.com/video-files/1581478/1581478-hd_1920_1080_30fps.mp4" type="video/mp4"/>
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80"/>
+      </video>
+      <div class="ov-bottom"></div>
+      <div class="ov-left"></div>
+    </div>
+    <div class="s-content p-full" style="justify-content:flex-end;max-width:680px">
+      <p class="t-eyebrow sa" data-d="0" style="margin-bottom:24px">Dining & Lifestyle</p>
+      <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(38px,5vw,72px);margin-bottom:20px">
+        A Culinary<br/><em class="t-italic">Destination in Itself.</em>
+      </h2>
+      <div class="gold-line sa" data-d="1" style="margin-bottom:22px"></div>
+      <p class="t-body sa" data-d="2" style="margin-bottom:36px">
+        100+ restaurants from celebrity chef partnerships to global QSR. Four distinct dining zones. Dining and entertainment account for 55% of visitor dwell time — meaning every F&B operator here benefits from a permanently captive, engaged audience.
+      </p>
+      <div class="grid4 sa" data-d="3" style="gap:1px;background:var(--border);margin-bottom:36px;border:1px solid var(--border)">
+        ${[['100+','Restaurants'],['6','Celebrity Chef Venues'],['4','Dining Zones'],['55%','Dwell time share']].map(([n,l])=>`
+          <div style="background:rgba(7,7,10,.88);padding:22px 16px;text-align:center">
+            <div class="t-stat-n" style="font-size:32px">${n}</div>
+            <div class="t-label" style="margin-top:6px">${l}</div>
+          </div>`).join('')}
+      </div>
+      <button class="btn-gold sa" data-d="4" onclick="openOverlay('lease')"><span>F&B Leasing Inquiry</span></button>
+    </div>`
+},
+
+/* 6 — ATTRACTIONS */
+{
+  id:'attractions',section:'Entertainment',label:'Attractions',
+  thumb:'https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?w=200&q=60',
+  render:()=>`
+    <div class="s-content" style="padding:80px;background:var(--ink)">
+      <div style="margin-bottom:48px">
+        <p class="t-eyebrow sa" data-d="0" style="margin-bottom:20px">Entertainment</p>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px">
+          <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(36px,5vw,72px)">
+            No Ticket Required.<br/><em class="t-italic">Just Show Up.</em>
+          </h2>
+          <p class="t-body sa" data-d="2" style="max-width:380px">The most powerful footfall engine in North American retail. 15+ world-class attractions that would anchor standalone destination parks — here, they're simply part of the address.</p>
+        </div>
+      </div>
+      <!-- Attraction grid -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:3px;flex:1;min-height:0">
+        ${[
+          {img:'https://offloadmedia.feverup.com/secretnyc.co/wp-content/uploads/2019/12/10122242/photo_chalet.jpg',tag:'Indoor · Year-Round',name:'Big SNOW Ski Resort',desc:"North America's only indoor ski resort. Real snow, 365 days.",vid:'https://videos.pexels.com/video-files/2330978/2330978-hd_1920_1080_30fps.mp4'},
+          {img:'https://images.unsplash.com/photo-1513889961551-628c1e5e2ee9?w=600&q=75',tag:'Theme Park · 165K sqft',name:'Nickelodeon Universe',desc:'Largest indoor theme park in the Western Hemisphere. 35+ rides.',vid:'https://videos.pexels.com/video-files/5946667/5946667-hd_1920_1080_30fps.mp4'},
+          {img:'https://cloudfront-us-east-1.images.arcpublishing.com/advancelocal/3IFFEU37WZH4NDBXGK373LIETM.jpg',tag:'Aquarium · Immersive',name:'SEA LIFE Aquarium',desc:'Walk-through ocean tunnel, shark lagoon, 10+ themed zones.'},
+          {img:'https://www.justgoplacesblog.com/wp-content/uploads/2023/01/ice-skating.jpg',tag:'NHL-Regulation · Events',name:'Ice Rink',desc:'Professional-spec ice for games, events, private bookings.',vid:''},
+          {img:'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=75',tag:'Observation · Landmark',name:'The Dream Wheel',desc:'Panoramic NYC skyline views. A signature activation platform.',vid:''},
+          {img:'https://thegarnettereport.com/wp-content/uploads/2019/05/506cbff003c184df836739e684d8a21d-1900x1069.jpg',tag:'Gaming · Corporate',name:'Activate & Mini Golf',desc:'Multi-level entertainment bookable for private events.',vid:''},
+        ].map((c,i)=>`
+          <div class="rel overflow-hidden sa sa-scale" data-d="${i%3}" style="cursor:none" onmouseenter="this.querySelector('video')?.play()" onmouseleave="this.querySelector('video')?.pause()">
+            ${c.vid?`<video src="${c.vid}" poster="${c.img}" muted loop playsinline preload="none" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5);transition:filter .5s,transform .7s var(--ease)"></video>`:`<img src="${c.img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5);transition:filter .5s,transform .7s var(--ease)" class="att-img"/>`}
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(7,7,10,.95),transparent 55%)"></div>
+            <div style="position:absolute;bottom:0;left:0;right:0;padding:20px;transform:translateY(4px);transition:transform .4s var(--ease)" class="att-info">
+              <div class="t-label" style="margin-bottom:5px;color:var(--gold)">${c.tag}</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;margin-bottom:4px">${c.name}</div>
+              <div style="font-size:11px;color:var(--cream2);font-weight:300;line-height:1.5;opacity:0;transition:opacity .4s;max-height:0;overflow:hidden" class="att-desc">${c.desc}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <style>
+      .rel:hover .att-info{transform:none!important}
+      .rel:hover .att-desc{opacity:1!important;max-height:60px!important}
+      .rel:hover img,.rel:hover video{filter:brightness(.7)!important;transform:scale(1.05)!important}
+    </style>`
+},
+
+/* 7 — EVENTS PLATFORM */
+{
+  id:'events',section:'Events',label:'Events Platform',
+  thumb:'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=200&q=60',
+  render:()=>`
+    <div class="s-media grain">
+      <video autoplay muted loop playsinline preload="none" poster="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920&q=80">
+        <source src="https://videos.pexels.com/video-files/1448735/1448735-hd_1920_1080_30fps.mp4" type="video/mp4"/>
+        <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920&q=80"/>
+      </video>
+      <div class="ov-bottom"></div>
+    </div>
+    <div class="s-content" style="justify-content:flex-end;align-items:center;text-align:center;padding:80px">
+      <p class="t-eyebrow sa" data-d="0" style="margin-bottom:24px;justify-content:center">The Global Stage</p>
+      <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(44px,6.5vw,96px);margin-bottom:20px">
+        Where the World's<br/><em class="t-italic">Biggest Moments</em><br/>Are Made.
+      </h2>
+      <p class="t-body sa" data-d="2" style="max-width:540px;margin:0 auto 40px">
+        300+ events per year. Zero slow days. A media platform that reaches 55 million consumers with every single activation.
+      </p>
+      <div class="flex sa" data-d="3" style="gap:0;border:1px solid rgba(200,146,42,.3);max-width:720px;margin:0 auto 36px">
+        ${[['12,500','Max Capacity'],['300+','Events / Year'],['4','Distinct Venues'],['$2.4B','Annual Media Value']].map(([n,l])=>`
+          <div style="flex:1;padding:24px;border-right:1px solid rgba(200,146,42,.2);text-align:center">
+            <div class="t-stat-n" style="font-size:34px">${n}</div>
+            <div class="t-label" style="margin-top:6px">${l}</div>
+          </div>`).join('')}
+      </div>
+      <div class="flex gap-12 sa" data-d="4" style="justify-content:center">
+        <button class="btn-gold" onclick="openVideo('5qap5aO4i9A')"><span>▶ Watch Event Reel</span></button>
+        <button class="btn-outline" onclick="goSlide(8)">Event Capabilities →</button>
+        <button class="btn-outline" onclick="openOverlay('event')">Book an Event</button>
+      </div>
+    </div>`
+},
+
+/* 8 — EVENT TYPES */
+{
+  id:'event-types',section:'Events',label:'Event Capabilities',
+  thumb:'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=200&q=60',
+  render:()=>`
+    <div style="display:grid;grid-template-columns:1fr 1fr;height:100%">
+      <!-- Left -->
+      <div style="background:var(--ink2);padding:72px 56px;display:flex;flex-direction:column;justify-content:center;overflow-y:auto">
+        <p class="t-eyebrow sa" data-d="0" style="margin-bottom:22px">Event Capabilities</p>
+        <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(30px,3.5vw,52px);margin-bottom:22px">
+          Every Format.<br/><em class="t-italic">Every Scale.</em>
+        </h2>
+        <div class="gold-line sa" data-d="1" style="margin-bottom:28px"></div>
+        ${[
+          {icon:'🎵',n:'Concerts & Music',d:'Up to 12,500 capacity. Full production rigging, sound, and broadcast infrastructure.'},
+          {icon:'🏆',n:'Sports & E-Sports',d:'NHL-spec ice + courts. Championship-ready production setup.'},
+          {icon:'🎪',n:'Brand Activations',d:'Custom build-outs, interactive experiences, 110K daily visitor reach.'},
+          {icon:'💼',n:'Corporate & Convention',d:'500K sqft expo hall. 20 loading docks. 36ft ceiling clearance.'},
+          {icon:'🎬',n:'Product Launches',d:'Broadcast-ready stages. 200M+ social media reach per activation.'},
+        ].map((e,i)=>`
+          <div class="sa" data-d="${i+2}" style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);align-items:flex-start">
+            <span style="font-size:22px;min-width:28px">${e.icon}</span>
+            <div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:3px;letter-spacing:.04em">${e.n}</div>
+              <div style="font-size:12px;color:var(--cream2);font-weight:300;line-height:1.6">${e.d}</div>
+            </div>
+          </div>`).join('')}
+        <div class="flex gap-12" style="margin-top:28px">
+          <button class="btn-gold sa" data-d="7" onclick="openOverlay('event')"><span>Book a Venue</span></button>
+        </div>
+      </div>
+      <!-- Right: timeline -->
+      <div style="background:var(--ink3);padding:72px 48px;display:flex;flex-direction:column;justify-content:center;overflow-y:auto">
+        <div class="t-label sa" data-d="0" style="margin-bottom:20px">Sample Programming Calendar</div>
+        ${[
+          ['JAN','Q1','Celebrity Fashion Week Pop-Up','40K+ attendees · International media','Activation'],
+          ['MAR','Q1','International Auto Show','3 days · 200+ brands · 180K visitors','Exhibition'],
+          ['JUN','Q2','Summer Concert Series','8-week A-list residency','Concert'],
+          ['SEP','Q3','Global Tech Product Launch','72-hr exclusive · 200M+ social reach','Launch'],
+          ['NOV','Q4','Holiday Spectacular','8-week residency · 3M+ visitors','Programming'],
+        ].map(([m,q,t,d,tag],i)=>`
+          <div class="sa" data-d="${i+1}" style="display:flex;align-items:center;gap:20px;padding:14px 0;border-bottom:1px solid var(--border);transition:padding-left .3s" onmouseenter="this.style.paddingLeft='8px'" onmouseleave="this.style.paddingLeft='0'">
+            <div style="text-align:center;min-width:48px">
+              <div class="t-stat-n" style="font-size:20px">${m}</div>
+              <div class="t-label" style="font-size:8px">${q}</div>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:12.5px;font-weight:500;margin-bottom:2px">${t}</div>
+              <div style="font-size:11px;color:var(--cream2);font-weight:300">${d}</div>
+            </div>
+            <div style="font-family:'Barlow Condensed';font-size:8px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);color:var(--cream3);white-space:nowrap">${tag}</div>
+          </div>`).join('')}
+      </div>
+    </div>`
+},
+
+/* 9 — VENUES */
+{
+  id:'venues',section:'Events',label:'Venue Portfolio',
+  thumb:'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=200&q=60',
+  render:()=>`
+    <div class="s-content" style="background:var(--ink);padding:72px 80px">
+      <div style="margin-bottom:48px">
+        <p class="t-eyebrow sa" data-d="0" style="margin-bottom:18px">Venue Portfolio</p>
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px">
+          <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(34px,4.5vw,66px)">
+            Four Stages.<br/><em class="t-italic">Infinite Possibilities.</em>
+          </h2>
+          <p class="t-body sa" data-d="2" style="max-width:360px">Each venue is a world-class event space in its own right — with dedicated production infrastructure and technical capabilities that match standalone arenas.</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:3px;flex:1">
+        ${[
+          {img:'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=700&q=75',icon:'🎭',name:'Performing Arts Center',specs:[['2,800','Seated'],['5,200','Standing GA'],['120ft','Stage Width'],['400+','Shows/yr']]},
+          {img:'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=700&q=75',icon:'🏟️',name:'The Arena Floor',specs:[['12,500','Max Capacity'],['85K','Sqft Floor'],['40+','Suites'],['Full','Broadcast Rig']]},
+          {img:'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=700&q=75',icon:'🏛️',name:'Exposition Center',specs:[['500K','Sqft'],['36ft','Ceiling'],['20','Loading Docks'],['180K','Max Attend.']]},
+          {img:'https://images.unsplash.com/photo-1522158637959-30385a09e0da?w=700&q=75',icon:'🎊',name:'Brand Activation Zones',specs:[['12+','Zones'],['10K','Max sqft'],['110K','Daily Visitors'],['7 Day','Lead Time']]},
+        ].map((v,i)=>`
+          <div class="rel overflow-hidden sa sa-scale" data-d="${i}" style="min-height:220px">
+            <img src="${v.img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.35);transition:filter .5s" onmouseenter="this.style.filter='brightness(.5)'" onmouseleave="this.style.filter='brightness(.35)'"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(7,7,10,.96),rgba(7,7,10,.4))"></div>
+            <div style="position:relative;z-index:2;padding:28px;height:100%;display:flex;flex-direction:column;justify-content:flex-end">
+              <div style="font-size:24px;margin-bottom:10px">${v.icon}</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--gold-pale);margin-bottom:16px">${v.name}</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)">
+                ${v.specs.map(([n,l])=>`<div style="background:rgba(7,7,10,.9);padding:10px;text-align:center"><div class="t-stat-n" style="font-size:18px">${n}</div><div class="t-label" style="margin-top:3px;font-size:8px">${l}</div></div>`).join('')}
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`
+},
+
+/* 10 — SPONSORSHIP */
+{
+  id:'sponsorship',section:'Sponsorship',label:'Partnership Tiers',
+  thumb:'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=200&q=60',
+  render:()=>`
+    <div class="s-media">
+      <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=1920&q=80"/>
+      <div class="ov-full" style="background:rgba(7,7,10,.72)"></div>
+    </div>
+    <div class="s-content" style="padding:72px 80px;overflow-y:auto">
+      <p class="t-eyebrow sa" data-d="0" style="margin-bottom:20px;justify-content:center;text-align:center">Sponsorship</p>
+      <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(34px,4.5vw,66px);text-align:center;margin-bottom:12px">
+        Own the Audience.<br/><em class="t-italic">Command the Stage.</em>
+      </h2>
+      <p class="t-body sa" data-d="2" style="text-align:center;max-width:520px;margin:0 auto 12px">Sponsorship at American Dream is not advertising — it is ownership of the most concentrated, affluent, and engaged consumer audience in North America.</p>
+      <!-- KPI row -->
+      <div class="flex sa" data-d="3" style="gap:0;border:1px solid var(--border);max-width:760px;margin:0 auto 40px">
+        ${[['40M+','Impressions/yr'],['$138K','Avg HHI'],['4.8H','Engagement'],['85%','Brand Recall']].map(([n,l])=>`
+          <div style="flex:1;padding:20px;border-right:1px solid var(--border);text-align:center;last-child:border-none">
+            <div class="t-stat-n" style="font-size:30px">${n}</div>
+            <div class="t-label" style="margin-top:5px">${l}</div>
+          </div>`).join('')}
+      </div>
+      <!-- Tier cards -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;max-width:1000px;margin:0 auto" class="sa" data-d="4">
+        ${[
+          {name:'Platinum',price:'$5M+',feat:false,items:['Category exclusivity across property','Naming rights — one major venue','Premium digital displays (A positions)','2 annual event programming rights','VIP hospitality suite access','Permanent custom activation space','Dedicated executive relationship']},
+          {name:'Gold',price:'$2M+',feat:true,items:['Priority digital display positions','1 major annual event activation','Co-branded content & media rights','Preferential pop-up retail access','Guest data & analytics dashboard','Social media integration program']},
+          {name:'Brand',price:'$500K+',feat:false,items:['Digital display network inclusion','2 seasonal activation rights/year','Event co-sponsorship options','Co-branded social content','Quarterly audience insights']},
+        ].map(t=>`
+          <div class="tier ${t.feat?'feat':''}">
+            <div class="t-label" style="margin-bottom:10px;color:var(--gold)">${t.name} Partner</div>
+            <div class="t-stat-n" style="font-size:42px;margin-bottom:4px">${t.price}</div>
+            <div class="t-label" style="margin-bottom:24px">Annual Partnership</div>
+            <ul style="list-style:none;margin-bottom:28px;display:flex;flex-direction:column;gap:8px">
+              ${t.items.map(i=>`<li style="font-size:11.5px;color:var(--cream2);padding-left:16px;position:relative;font-weight:300;line-height:1.5"><span style="position:absolute;left:0;color:var(--gold);font-size:10px">—</span>${i}</li>`).join('')}
+            </ul>
+            <button class="${t.feat?'btn-gold':'btn-outline'} w-full" style="width:100%;justify-content:center" onclick="openOverlay('sponsor')"><span>Enquire</span></button>
+          </div>`).join('')}
+      </div>
+    </div>`
+},
+
+/* 11 — LEASING PATHS */
+{
+  id:'leasing',section:'Leasing',label:'Leasing Paths',
+  thumb:'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=200&q=60',
+  render:()=>`
+    <div class="s-content" style="background:var(--ink);padding:72px 80px;overflow-y:auto">
+      <p class="t-eyebrow sa" data-d="0" style="margin-bottom:20px">Leasing</p>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:44px">
+        <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(34px,4.5vw,66px)">
+          Find Your<br/><em class="t-italic">Position.</em>
+        </h2>
+        <p class="t-body sa" data-d="2" style="max-width:360px">Whether you're opening a flagship, testing a new format, or anchoring a category — American Dream has a space engineered for your ambition.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:3px">
+        ${[
+          {img:'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=75',tag:'Flagship / Anchor',title:'Make a Statement',desc:"5,000–100,000+ sqft. 5–15 year terms. Full TI packages. North America's most-visited address.",details:[['Size','5K–100K+ sqft'],['Term','5–15 years'],['TI','Full packages']]},
+          {img:'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=700&q=75',tag:'Luxury Wing',title:'Enter the Luxury Wing',desc:'1,000–8,000 sqft. By invitation. Curated adjacencies. $180K+ avg zone HHI.',details:[['Size','1K–8K sqft'],['Avg HHI','$180K+'],['Adjacencies','By invitation']]},
+          {img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=75',tag:'Food & Beverage',title:'Feed the Destination',desc:'500–12,000 sqft. 1,200–4,500 avg covers per day. QSR, casual, fine dining, food hall.',details:[['Size','500–12K sqft'],['Covers/day','1,200–4,500'],['Format','All F&B types']]},
+          {img:'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=700&q=75',tag:'Pop-Up & Short Term',title:'Test at Scale',desc:'100–3,000 sqft. From 1 week. White-box or turnkey. Go live in 7 days.',details:[['Size','100–3K sqft'],['Min Term','1 week'],['Go-Live','7 days']]}
+        ].map((c,i)=>`
+          <div class="rel overflow-hidden sa sa-scale" data-d="${i}" style="min-height:260px">
+            <img src="${c.img}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.28);transition:filter .5s,transform .8s var(--ease)"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(7,7,10,.98),rgba(7,7,10,.5))"></div>
+            <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);transform:scaleY(0);transform-origin:bottom;transition:transform .4s var(--ease)" class="lease-bar"></div>
+            <div style="position:relative;z-index:2;padding:28px 32px;height:100%;display:flex;flex-direction:column;justify-content:flex-end" onmouseenter="this.parentElement.querySelector('img').style.filter='brightness(.45)';this.parentElement.querySelector('img').style.transform='scale(1.04)';this.parentElement.querySelector('.lease-bar').style.transform='scaleY(1)'" onmouseleave="this.parentElement.querySelector('img').style.filter='brightness(.28)';this.parentElement.querySelector('img').style.transform='scale(1)';this.parentElement.querySelector('.lease-bar').style.transform='scaleY(0)'">
+              <div class="t-label" style="margin-bottom:8px;color:var(--gold)">${c.tag}</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;margin-bottom:8px">${c.title}</div>
+              <div style="font-size:12px;color:var(--cream2);line-height:1.7;font-weight:300;margin-bottom:16px">${c.desc}</div>
+              <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:16px">
+                ${c.details.map(([l,v])=>`<div style="display:flex;justify-content:space-between;font-size:10.5px;padding:5px 0;border-bottom:1px solid rgba(200,146,42,.1)"><span style="color:var(--cream3)">${l}</span><span style="font-weight:500">${v}</span></div>`).join('')}
+              </div>
+              <button class="btn-outline" style="font-size:9px;padding:8px 20px;align-self:flex-start" onclick="openOverlay('lease')">Enquire →</button>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`
+},
+
+/* 12 — DEMOGRAPHICS */
+{
+  id:'demographics',section:'Audience',label:'Audience Data',
+  thumb:'https://images.unsplash.com/photo-1573164713712-03f600560118?w=200&q=60',
+  render:()=>`
+    <div style="display:grid;grid-template-columns:1fr 1fr;height:100%">
+      <div style="background:var(--ink2);padding:72px 56px;display:flex;flex-direction:column;justify-content:center;overflow-y:auto">
+        <p class="t-eyebrow sa" data-d="0" style="margin-bottom:22px">Audience Intelligence</p>
+        <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(30px,3.5vw,52px);margin-bottom:20px">
+          The Numbers<br/><em class="t-italic">That Close Deals.</em>
+        </h2>
+        <div class="gold-line sa" data-d="1" style="margin-bottom:28px"></div>
+        ${[
+          ['55M','Population within 2-hour drive','The largest consumer catchment of any single retail property on Earth.',96],
+          ['$138K','Average household income','42% of visitors earn $150K+ — an exceptionally premium audience.',78],
+          ['62%','Millennials & Gen Z','The most brand-conscious, experience-seeking demographic in the market.',82],
+          ['38%','International visitors','Three international airports nearby. Highest-spending retail demographic.',60],
+          ['4.8H','Average dwell time','More than double the 2.1H national mall average.',90],
+        ].map(([n,t,d,w],i)=>`
+          <div class="sa" data-d="${i+2}" style="margin-bottom:18px">
+            <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:4px">
+              <div class="t-stat-n" style="font-size:28px;min-width:72px">${n}</div>
+              <div style="font-size:12.5px;font-weight:500">${t}</div>
+            </div>
+            <div style="font-size:11px;color:var(--cream3);font-weight:300;padding-left:86px;line-height:1.5;margin-bottom:7px">${d}</div>
+            <div class="data-bar" style="margin-left:86px"><div class="data-fill" data-w="${w}"></div></div>
+          </div>`).join('')}
+      </div>
+      <div class="rel overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1573164713712-03f600560118?w=960&q=80" style="width:100%;height:100%;object-fit:cover;filter:brightness(.6)"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to left,transparent,rgba(7,7,10,.3))"></div>
+        <div class="abs sa-right" style="top:52px;right:44px;z-index:2;text-align:right">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Visit Origin</div>
+          ${[['44%','Tri-State Locals'],['18%','Day-Trip Regional'],['38%','International'],['0%','Never Disappointed']].filter(x=>x[0]!=='0%').map(([p,l])=>`
+            <div style="margin-bottom:10px">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--gold);line-height:1">${p}</div>
+              <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cream3)">${l}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`
+},
+
+/* 13 — FINAL CTA */
+{
+  id:'cta',section:'Contact',label:'Get in Touch',
+  thumb:'https://images.unsplash.com/photo-1573164713712-03f600560118?w=200&q=60',
+  render:()=>`
+    <div class="s-media grain">
+      <img src="https://images.unsplash.com/photo-1573164713712-03f600560118?w=1920&q=80"/>
+      <div class="ov-full" style="background:rgba(7,7,10,.78)"></div>
+    </div>
+    <div class="s-content" style="justify-content:center;align-items:center;text-align:center;padding:80px">
+      <p class="t-eyebrow sa" data-d="0" style="margin-bottom:28px;justify-content:center">The Next Step</p>
+      <h2 class="t-h2 sa" data-d="1" style="font-size:clamp(48px,7.5vw,108px);margin-bottom:28px">
+        Your Brand<br/><em class="t-italic">Belongs</em><br/>Here.
+      </h2>
+      <p class="t-body sa" data-d="2" style="max-width:480px;margin:0 auto 48px">
+        The world's most valuable commercial stage has limited availability. Let's discuss your opportunity before someone else takes it.
+      </p>
+      <div class="flex gap-16 sa" data-d="3" style="justify-content:center;flex-wrap:wrap;margin-bottom:56px">
+        <button class="btn-gold" onclick="openOverlay('contact')"><span>Schedule a Briefing</span></button>
+        <button class="btn-outline" onclick="openOverlay('lease')">Lease a Space</button>
+        <button class="btn-outline" onclick="openOverlay('event')">Book an Event</button>
+        <button class="btn-outline" onclick="openOverlay('sponsor')">Partner With Us</button>
+      </div>
+      <!-- Contact cards -->
+      <div class="flex sa" data-d="4" style="gap:2px;border:1px solid var(--border);justify-content:center;max-width:720px;margin:0 auto">
+        ${[
+          {role:'Retail Leasing',name:'Sarah Mitchell',email:'s.mitchell@americandream.com'},
+          {role:'Events & Sponsorship',name:'James Carrington',email:'j.carrington@americandream.com'},
+          {role:'Brand Partnerships',name:'Elena Vasquez',email:'e.vasquez@americandream.com'},
+        ].map(c=>`
+          <div style="flex:1;padding:24px;background:rgba(7,7,10,.7);backdrop-filter:blur(8px);text-align:left">
+            <div class="t-label" style="margin-bottom:10px;color:var(--gold)">${c.role}</div>
+            <div style="font-size:14px;font-weight:500;margin-bottom:4px">${c.name}</div>
+            <div style="font-size:11.5px;color:var(--cream2);font-weight:300">${c.email}</div>
+          </div>`).join('')}
+      </div>
+    </div>`
+},
+
+];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let cur = 0;
+const total = SLIDES.length;
+
+/* ============================================================
+   CURSOR
+   ============================================================ */
+const csr = document.getElementById('csr');
+const csrR = document.getElementById('csr-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;csr.style.left=mx+'px';csr.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;csrR.style.left=rx+'px';csrR.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.addEventListener('mouseover',e=>{if(e.target.closest('button,a,[data-cursor]'))document.body.classList.add('hovering')});
+document.addEventListener('mouseout',e=>{if(e.target.closest('button,a,[data-cursor]'))document.body.classList.remove('hovering')});
+
+/* ============================================================
+   LOADER
+   ============================================================ */
+(()=>{
+  const fill=document.getElementById('ld-fill');
+  const pct=document.getElementById('ld-pct');
+  let w=0;
+  const t=setInterval(()=>{
+    w+=Math.random()*15+5;
+    if(w>=100){w=100;clearInterval(t);setTimeout(()=>{document.getElementById('loader').classList.add('out');document.getElementById('deck').classList.add('ready');setTimeout(()=>goSlide(0),600)},400)}
+    fill.style.width=Math.min(w,100)+'%';
+    pct.textContent=Math.round(Math.min(w,100))+'%';
+  },90);
+})();
+
+/* ============================================================
+   BUILD DECK
+   ============================================================ */
+function buildDeck(){
+  const slidesEl=document.getElementById('slides');
+  SLIDES.forEach((s,i)=>{
+    const div=document.createElement('div');
+    div.className='slide';
+    div.id='slide-'+i;
+    div.innerHTML=s.render();
+    slidesEl.appendChild(div);
+  });
+  buildDrawer();
+  buildDots();
+}
+
+/* ============================================================
+   DRAWER
+   ============================================================ */
+function buildDrawer(){
+  const nav=document.getElementById('drawer-nav');
+  // group by section
+  const sections={};
+  SLIDES.forEach((s,i)=>{(sections[s.section]=sections[s.section]||[]).push({...s,idx:i})});
+  let html='';
+  Object.entries(sections).forEach(([sec,items])=>{
+    html+=`<div class="drawer-section-label">${sec}</div>`;
+    items.forEach(s=>{
+      html+=`<div class="drawer-item ${s.idx===cur?'current':''}" id="di-${s.idx}" onclick="goSlide(${s.idx});toggleDrawer()">
+        <span class="di-num">${String(s.idx+1).padStart(2,'0')}</span>
+        <div class="di-thumb"><img src="${s.thumb}" alt="${s.label}" loading="lazy"/></div>
+        <span>${s.label}</span>
+      </div>`;
+    });
+    html+=`<div class="drawer-divider"></div>`;
+  });
+  nav.innerHTML=html;
+}
+
+function updateDrawer(){
+  document.querySelectorAll('.drawer-item').forEach(el=>el.classList.remove('current'));
+  const item=document.getElementById('di-'+cur);
+  if(item){item.classList.add('current');item.scrollIntoView({block:'nearest',behavior:'smooth'})}
+}
+
+/* ============================================================
+   DOTS
+   ============================================================ */
+function buildDots(){
+  const el=document.getElementById('sc-dots');
+  el.innerHTML=SLIDES.map((_,i)=>`<div class="sc-dot ${i===cur?'on':''}" onclick="goSlide(${i})" title="${SLIDES[i].label}"></div>`).join('');
+  document.getElementById('sc-tot').textContent=String(total).padStart(2,'0');
+}
+function updateDots(){
+  document.querySelectorAll('.sc-dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  document.getElementById('sc-cur').textContent=String(cur+1).padStart(2,'0');
+}
+
+/* ============================================================
+   GO TO SLIDE
+   ============================================================ */
+function goSlide(idx){
+  if(idx<0||idx>=total)return;
+  const prev=cur;
+  cur=idx;
+
+  // Deactivate old
+  const oldSlide=document.getElementById('slide-'+prev);
+  if(oldSlide){
+    oldSlide.classList.remove('active');
+    // Pause videos
+    oldSlide.querySelectorAll('video').forEach(v=>v.pause());
+    // Remove animations
+    oldSlide.querySelectorAll('.sa,.sa-left,.sa-right,.sa-scale').forEach(el=>{el.classList.remove('in')});
+  }
+
+  // Activate new
+  const newSlide=document.getElementById('slide-'+cur);
+  if(!newSlide)return;
+  newSlide.classList.add('active');
+
+  // Play videos
+  newSlide.querySelectorAll('video[autoplay]').forEach(v=>{v.currentTime=0;v.play().catch(()=>{})});
+
+  // Trigger animations
+  setTimeout(()=>{
+    newSlide.querySelectorAll('.sa,.sa-left,.sa-right,.sa-scale').forEach(el=>{
+      // Force reflow then add class
+      void el.offsetHeight;
+      el.classList.add('in');
+    });
+  },80);
+
+  // Bar charts
+  setTimeout(()=>{
+    newSlide.querySelectorAll('.data-fill[data-w]').forEach(b=>{
+      b.style.width=b.dataset.w+'%';
+    });
+  },600);
+
+  // Update UI
+  updateDots();
+  updateDrawer();
+  updateArrows();
+  updateProgress();
+}
+
+function updateArrows(){
+  document.getElementById('arr-prev').classList.toggle('disabled',cur===0);
+  document.getElementById('arr-next').classList.toggle('disabled',cur===total-1);
+}
+
+function updateProgress(){
+  document.getElementById('prog').style.width=(((cur)/(total-1))*100)+'%';
+}
+
+/* ============================================================
+   KEYBOARD
+   ============================================================ */
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.tagName==='SELECT')return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ')goSlide(cur+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(cur-1);
+  if(e.key==='Escape'){closeOverlay(null,true);closeVideo(null,true);if(document.getElementById('drawer').classList.contains('open'))toggleDrawer()}
+});
+
+/* ============================================================
+   TOUCH SWIPE
+   ============================================================ */
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50){dx<0?goSlide(cur+1):goSlide(cur-1)}
+},{passive:true});
+
+/* ============================================================
+   DRAWER TOGGLE
+   ============================================================ */
+function toggleDrawer(){
+  document.getElementById('drawer').classList.toggle('open');
+  document.getElementById('topbar').classList.toggle('solid');
+}
+document.addEventListener('click',e=>{
+  const drawer=document.getElementById('drawer');
+  if(drawer.classList.contains('open')&&!drawer.contains(e.target)&&!document.getElementById('menu-btn').contains(e.target))toggleDrawer();
+});
+
+/* ============================================================
+   OVERLAY / MODALS
+   ============================================================ */
+const FORMS = {
+  contact:{title:'Schedule a Briefing',sub:'Our team will prepare a custom presentation within 48 hours.',fields:[
+    {type:'row',fields:[{l:'First Name',t:'text',p:'Alexandra'},{l:'Last Name',t:'text',p:'Chen'}]},
+    {l:'Company',t:'text',p:'Brand / Agency / Firm'},
+    {l:'Email',t:'email',p:'email@company.com'},
+    {l:'Area of Interest',t:'select',opts:['General Inquiry','Retail Leasing','Event Booking','Brand Partnership']},
+    {l:'Message',t:'textarea',p:'Tell us about your goals and timeline...'},
+  ]},
+  lease:{title:'Leasing Inquiry',sub:'Tell us your requirements and our leasing team will prepare a proposal.',fields:[
+    {type:'row',fields:[{l:'Contact Name',t:'text',p:'Full Name'},{l:'Brand',t:'text',p:'Brand Name'}]},
+    {l:'Leasing Category',t:'select',opts:['Flagship / Anchor','Luxury Wing','Food & Beverage','Pop-Up / Short Term','Entertainment']},
+    {type:'row',fields:[{l:'Required Sqft',t:'text',p:'e.g. 2,500 sqft'},{l:'Target Opening',t:'text',p:'Q3 2026'}]},
+    {l:'Email',t:'email',p:'leasing@brand.com'},
+  ]},
+  event:{title:'Event Booking',sub:'One of four world-class venues. We respond within 24 hours.',fields:[
+    {type:'row',fields:[{l:'Your Name',t:'text',p:'Full Name'},{l:'Organization',t:'text',p:'Company / Agency'}]},
+    {l:'Event Type',t:'select',opts:['Concert / Music','Corporate Summit','Brand Activation','Product Launch','Trade Show / Expo','Sports Event','Private Event']},
+    {type:'row',fields:[{l:'Attendance',t:'text',p:'e.g. 5,000'},{l:'Preferred Date',t:'text',p:'MM/YYYY'}]},
+    {l:'Email',t:'email',p:'events@company.com'},
+  ]},
+  sponsor:{title:'Partnership Inquiry',sub:'Explore sponsorship and brand partnership opportunities.',fields:[
+    {type:'row',fields:[{l:'Contact Name',t:'text',p:'Full Name'},{l:'Brand',t:'text',p:'Brand Name'}]},
+    {l:'Partnership Level',t:'select',opts:['Platinum ($5M+)','Gold ($2M+)','Brand ($500K+)','Custom Inquiry']},
+    {l:'Email',t:'email',p:'partnerships@brand.com'},
+    {l:'Goals & Notes',t:'textarea',p:'Campaign objectives, target audience, key dates...'},
+  ]},
+};
+
+function openOverlay(type){
+  const cfg=FORMS[type];
+  if(!cfg)return;
+  function renderField(f){
+    if(f.type==='row')return`<div class="form-row">${f.fields.map(renderField).join('')}</div>`;
+    return`<div class="fg">
+      <label>${f.l}</label>
+      ${f.t==='select'?`<select>${f.opts.map(o=>`<option>${o}</option>`).join('')}</select>`:
+        f.t==='textarea'?`<textarea rows="3" placeholder="${f.p}"></textarea>`:
+        `<input type="${f.t}" placeholder="${f.p}"/>`}
+    </div>`;
+  }
+  document.getElementById('ov-inner').innerHTML=`
+    <button class="ov-close abs" style="top:20px;right:20px" onclick="closeOverlay(null,true)">✕</button>
+    <div style="font-family:'Barlow Condensed';font-size:9px;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">American Dream</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;margin-bottom:6px">${cfg.title}</div>
+    <div style="font-size:12px;color:var(--cream2);margin-bottom:28px;font-weight:300">${cfg.sub}</div>
+    ${cfg.fields.map(renderField).join('')}
+    <button class="btn-gold w-full" style="width:100%;justify-content:center;margin-top:8px;padding:14px" onclick="submitForm()"><span>Submit Inquiry</span></button>
+  `;
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closeOverlay(e,force){
+  if(force||e?.target===document.getElementById('overlay'))
+    document.getElementById('overlay').classList.remove('open');
+}
+
+function submitForm(){
+  document.getElementById('ov-inner').innerHTML=`
+    <div style="text-align:center;padding:40px 0">
+      <div style="width:52px;height:52px;border-radius:50%;border:1px solid var(--gold);background:rgba(200,146,42,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:20px">✓</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;margin-bottom:8px">Inquiry Received</div>
+      <p style="font-size:13px;color:var(--cream2);font-weight:300;line-height:1.8;max-width:360px;margin:0 auto 28px">Thank you for your interest in American Dream. A member of our commercial team will be in touch within 24 hours.</p>
+      <button class="btn-gold" onclick="closeOverlay(null,true)"><span>Close</span></button>
+    </div>
+  `;
+}
+
+/* ============================================================
+   VIDEO LIGHTBOX
+   ============================================================ */
+function openVideo(ytId){
+  document.getElementById('vb-iframe').src=`https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1`;
+  document.getElementById('vbox').classList.add('open');
+}
+function closeVideo(e,force){
+  if(force||e?.target===document.getElementById('vbox')){
+    document.getElementById('vbox').classList.remove('open');
+    document.getElementById('vb-iframe').src='';
+  }
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+buildDeck();
+</script>
+</body>
+</html>
